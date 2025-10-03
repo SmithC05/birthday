@@ -21,13 +21,13 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isBirthdayReached) {
       // Password is disabled on/after the birthday
       onCorrectPassword();
       return;
     }
-    
+
     if (password === "00001236") { // Special password
       onCorrectPassword();
     } else {
@@ -43,17 +43,16 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <Card 
-        className={`bg-white/10 backdrop-blur-md border-2 border-primary/50 p-8 max-w-md w-full ${
-          isShaking ? "animate-shake" : ""
-        }`}
+      <Card
+        className={`bg-white/10 backdrop-blur-md border-2 border-primary/50 p-8 max-w-md w-full ${isShaking ? "animate-shake" : ""
+          }`}
         data-testid="card-password-entry"
       >
         <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
             <Lock className="w-8 h-8 text-primary" data-testid="icon-lock" />
           </div>
-          <h2 
+          <h2
             className="text-3xl font-bold text-white mb-2"
             data-testid="text-password-title"
           >
@@ -71,9 +70,8 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password..."
-              className={`bg-white/10 border-2 text-white placeholder:text-white/50 ${
-                error ? "border-red-500" : "border-white/30"
-              }`}
+              className={`bg-white/10 border-2 text-white placeholder:text-white/50 ${error ? "border-red-500" : "border-white/30"
+                }`}
               data-testid="input-password"
             />
             {error && (

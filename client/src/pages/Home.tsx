@@ -14,6 +14,10 @@ import GallerySection from "@/components/GallerySection";
 import MessagesSection from "@/components/MessagesSection";
 import CountdownSection from "@/components/CountdownSection";
 import TimelineSection from "@/components/TimelineSection";
+import CakeCuttingSection from "@/components/CakeCuttingSection";
+import GuestBookSection from "@/components/GuestBookSection";
+import BirthdayQuizSection from "@/components/BirthdayQuizSection";
+import BirthdayCardSection from "@/components/BirthdayCardSection";
 import SurpriseSection from "@/components/SurpriseSection";
 import FireworksSection from "@/components/FireworksSection";
 
@@ -130,6 +134,10 @@ export default function Home() {
                 </div>
                 <div className="animate-fade-in">
                   <TimelineSection />
+                  <CakeCuttingSection />
+                  <GuestBookSection />
+                  <BirthdayQuizSection />
+                  <BirthdayCardSection />
                   <GallerySection />
                   <MessagesSection />
                   <SurpriseSection />
