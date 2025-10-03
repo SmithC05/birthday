@@ -6,6 +6,7 @@ import FloatingBalloons from "@/components/FloatingBalloons";
 import FloatingHearts from "@/components/FloatingHearts";
 import PeriodicFireworks from "@/components/PeriodicFireworks";
 import FloatingSparkles from "@/components/FloatingSparkles";
+import PasswordEntry from "@/components/PasswordEntry";
 import HeroSection from "@/components/HeroSection";
 import GallerySection from "@/components/GallerySection";
 import MessagesSection from "@/components/MessagesSection";
@@ -15,6 +16,16 @@ import FireworksSection from "@/components/FireworksSection";
 
 export default function Home() {
   const [isBirthdayReached, setIsBirthdayReached] = useState(false);
+  const [isUnlockedWithPassword, setIsUnlockedWithPassword] = useState(false);
+  const [showPasswordEntry, setShowPasswordEntry] = useState(true);
+
+  useEffect(() => {
+    const unlocked = localStorage.getItem("birthdayUnlocked") === "true";
+    if (unlocked) {
+      setIsUnlockedWithPassword(true);
+      setShowPasswordEntry(false);
+    }
+  }, []);
 
   useEffect(() => {
     const targetDate = new Date();
@@ -23,7 +34,11 @@ export default function Home() {
     
     const checkBirthday = () => {
       const now = new Date();
-      setIsBirthdayReached(now >= targetDate);
+      const reached = now >= targetDate;
+      setIsBirthdayReached(reached);
+      if (reached) {
+        setShowPasswordEntry(false);
+      }
     };
 
     checkBirthday();
@@ -31,6 +46,18 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handlePasswordCorrect = () => {
+    localStorage.setItem("birthdayUnlocked", "true");
+    setIsUnlockedWithPassword(true);
+    setShowPasswordEntry(false);
+  };
+
+  const handleSkipToCountdown = () => {
+    setShowPasswordEntry(false);
+  };
+
+  const isContentUnlocked = isBirthdayReached || isUnlockedWithPassword;
 
   return (
     <div className="relative">
@@ -43,14 +70,25 @@ export default function Home() {
       <FloatingSparkles />
       
       <main className="relative z-10" style={{ scrollBehavior: 'smooth' }}>
-        <HeroSection />
-        <CountdownSection />
-        {isBirthdayReached && (
+        {showPasswordEntry && !isContentUnlocked ? (
+          <PasswordEntry 
+            onCorrectPassword={handlePasswordCorrect}
+            onSkipToCountdown={handleSkipToCountdown}
+          />
+        ) : (
           <>
-            <GallerySection />
-            <MessagesSection />
-            <SurpriseSection />
-            <FireworksSection />
+            <div className="animate-fade-in">
+              <HeroSection />
+            </div>
+            <CountdownSection />
+            {isContentUnlocked && (
+              <div className="animate-fade-in">
+                <GallerySection />
+                <MessagesSection />
+                <SurpriseSection />
+                <FireworksSection />
+              </div>
+            )}
           </>
         )}
       </main>
