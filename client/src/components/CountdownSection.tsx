@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
+import { ChevronDown } from "lucide-react";
 
 export default function CountdownSection() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -7,18 +8,22 @@ export default function CountdownSection() {
   const [wishIndex, setWishIndex] = useState(0);
 
   const advanceWishes = [
-    "� Advan ce Happy Birthday, Keerthana! 🎂",
-    "🌟 Your special day is almost here, beautiful! 🌟",
-    "💖 Sending you early birthday love and joy! 💖",
-    "🎈 The countdown to your magical day has begun! 🎈",
-    "✨ Every moment brings us closer to celebrating YOU! ✨",
-    "� Get reiady for the most amazing birthday celebration! �",
-    "� Advance hwishes for the sweetest person ever! 🌸",
-    "🎯 Your birthday is going to be absolutely perfect! 🎯",
-    "💫 Keerthana, you deserve all the happiness in the world! 💫",
-    "🎁 The best gift is having you in our lives! 🎁",
-    "🌺 Advance Happy Birthday to our shining star! 🌺",
-    "🎪 The celebration countdown is on - just for you! 🎪"
+    "🎂 Advance Happy Birthday, Keerthana Madam! 🎂",
+    "🌟 Happy Birthday to our brilliant Topper! 🌟",
+    "💃 Advance wishes to the amazing Dancer! 💃",
+    "🎤 Happy Birthday to our talented Singer! 🎤",
+    "👑 Advance Birthday wishes to our Queen! 👑",
+    "✨ Happy Birthday to the most beautiful soul! ✨",
+    "🎊 Advance wishes to our shining Star! 🎊",
+    "🌸 Happy Birthday to the sweetest person ever! 🌸",
+    "🎯 Advance Birthday to our amazing Friend! 🎯",
+    "💫 Happy Birthday to our brilliant Student! 💫",
+    "🎁 Advance wishes to our precious Gem! 🎁",
+    "🌺 Happy Birthday to our wonderful Keerthana! 🌺",
+    "🎪 Advance Birthday to our talented Artist! 🎪",
+    "🏆 Happy Birthday to our Champion! 🏆",
+    "💖 Advance wishes to our beloved Friend! 💖",
+    "🎈 Happy Birthday to our amazing Performer! 🎈"
   ];
 
   useEffect(() => {
@@ -54,12 +59,19 @@ export default function CountdownSection() {
     return () => clearInterval(wishTimer);
   }, [advanceWishes.length]);
 
+  const scrollToNext = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section 
-      className="min-h-screen flex items-center justify-center py-16 px-4"
+      className="min-h-screen flex flex-col items-center justify-center py-16 px-4 relative"
       data-testid="section-countdown"
     >
-      <div className="max-w-4xl w-full text-center">
+      <div className="max-w-4xl w-full text-center flex-1 flex flex-col justify-center">
         <h2 
           className="text-4xl md:text-6xl font-bold text-white mb-8 animate-glow"
           data-testid="text-countdown-title"
@@ -125,6 +137,17 @@ export default function CountdownSection() {
             It's officially your day! 🎉
           </div>
         )}
+      </div>
+
+      {/* Scroll Down Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <button
+          onClick={scrollToNext}
+          className="flex flex-col items-center text-white/70 hover:text-white transition-colors duration-300 animate-bounce"
+        >
+          <span className="text-sm mb-2">Scroll for more</span>
+          <ChevronDown className="w-6 h-6" />
+        </button>
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import HeroSection from "@/components/HeroSection";
 import GallerySection from "@/components/GallerySection";
 import MessagesSection from "@/components/MessagesSection";
 import CountdownSection from "@/components/CountdownSection";
+import TimelineSection from "@/components/TimelineSection";
 import SurpriseSection from "@/components/SurpriseSection";
 import FireworksSection from "@/components/FireworksSection";
 
@@ -128,6 +129,7 @@ export default function Home() {
                   <HeroSection />
                 </div>
                 <div className="animate-fade-in">
+                  <TimelineSection />
                   <GallerySection />
                   <MessagesSection />
                   <SurpriseSection />
