@@ -27,7 +27,7 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
       return;
     }
     
-    if (password === "20251030") { // Updated to 2025 date
+    if (password === "00001236") { // Special password
       onCorrectPassword();
     } else {
       setError(true);
@@ -106,7 +106,7 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
 
         <div className="mt-6 pt-6 border-t border-white/20">
           <p className="text-white/60 text-xs text-center" data-testid="text-password-hint">
-            Hint: The special date you're celebrating! (YYYYMMDD)
+            Hint: A special number that unlocks the magic! ✨
           </p>
         </div>
       </Card>
