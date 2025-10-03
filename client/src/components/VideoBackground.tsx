@@ -7,47 +7,41 @@ export default function VideoBackground() {
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    // Detect mobile devices
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (videoRef.current && !isMobile) {
+    // Always try to play video, let browser decide if it can handle it
+    if (videoRef.current) {
       videoRef.current.play().catch((error) => {
         console.log("Video autoplay failed:", error);
+        // Fallback to gradient background if video fails
+        setIsMobile(true);
       });
     }
-  }, [isMobile, videoLoaded]);
+  }, [videoLoaded]);
 
   return (
     <>
-      {/* Show gradient background on mobile, video on desktop */}
-      {isMobile ? (
+      {/* Always show video first, fallback to gradient if needed */}
+      <video
+        ref={videoRef}
+        className="fixed inset-0 w-full h-full object-cover -z-10"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        onLoadedData={() => setVideoLoaded(true)}
+        data-testid="video-background"
+      >
+        <source src={bgVideo} type="video/mp4" />
+      </video>
+      
+      {/* Fallback gradient background if video fails */}
+      {isMobile && (
         <div 
           className="fixed inset-0 -z-10 bg-gradient-to-br from-birthday-pink/20 via-celebration-purple/30 to-party-blue/20"
           data-testid="mobile-background"
         />
-      ) : (
-        <video
-          ref={videoRef}
-          className="fixed inset-0 w-full h-full object-cover -z-10"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          onLoadedData={() => setVideoLoaded(true)}
-          data-testid="video-background"
-        >
-          <source src={bgVideo} type="video/mp4" />
-        </video>
       )}
+      
       <div className="fixed inset-0 bg-black/30 -z-10" data-testid="video-overlay" />
     </>
   );

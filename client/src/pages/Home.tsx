@@ -119,17 +119,21 @@ export default function Home() {
           />
         ) : (
           <>
-            <div className="animate-fade-in">
-              <HeroSection />
-            </div>
-            <CountdownSection />
-            {isContentUnlocked && (
-              <div className="animate-fade-in">
-                <GallerySection />
-                <MessagesSection />
-                <SurpriseSection />
-                <FireworksSection />
-              </div>
+            {/* Show countdown only in waiting session (not after password login) */}
+            {!isContentUnlocked ? (
+              <CountdownSection />
+            ) : (
+              <>
+                <div className="animate-fade-in">
+                  <HeroSection />
+                </div>
+                <div className="animate-fade-in">
+                  <GallerySection />
+                  <MessagesSection />
+                  <SurpriseSection />
+                  <FireworksSection />
+                </div>
+              </>
             )}
           </>
         )}

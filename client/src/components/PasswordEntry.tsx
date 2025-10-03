@@ -14,14 +14,15 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
   const [error, setError] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
+  // Check if it's already the birthday
+  const now = new Date();
+  const targetDate = new Date(2025, 9, 30, 0, 0, 0, 0); // Oct 30, 2025 at 12:00 AM
+  const isBirthdayReached = now >= targetDate;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Check if it's already Oct 30, 2025 - disable password entry
-    const now = new Date();
-    const targetDate = new Date(2025, 9, 30, 0, 0, 0, 0); // Oct 30, 2025 at 12:00 AM
-    
-    if (now >= targetDate) {
+    if (isBirthdayReached) {
       // Password is disabled on/after the birthday
       onCorrectPassword();
       return;
@@ -92,16 +93,18 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
             Unlock Celebration
           </Button>
 
-          <Button
-            type="button"
-            onClick={onSkipToCountdown}
-            className="w-full mt-3"
-            variant="outline"
-            data-testid="button-skip-to-countdown"
-          >
-            <Clock className="w-4 h-4 mr-2" />
-            Wait for Countdown
-          </Button>
+          {!isBirthdayReached && (
+            <Button
+              type="button"
+              onClick={onSkipToCountdown}
+              className="w-full mt-3"
+              variant="outline"
+              data-testid="button-skip-to-countdown"
+            >
+              <Clock className="w-4 h-4 mr-2" />
+              Wait for Countdown
+            </Button>
+          )}
         </form>
 
         <div className="mt-6 pt-6 border-t border-white/20">

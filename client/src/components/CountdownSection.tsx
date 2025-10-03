@@ -7,14 +7,18 @@ export default function CountdownSection() {
   const [wishIndex, setWishIndex] = useState(0);
 
   const advanceWishes = [
-    "🌟 Every day until your birthday is a gift! 🌟",
-    "💖 Counting down to celebrate the amazing person you are! 💖",
-    "🎈 The excitement is building up for your special day! 🎈",
-    "✨ Each second brings us closer to your magical moment! ✨",
-    "🎊 Can't wait to shower you with birthday love! 🎊",
-    "🌸 Your birthday countdown makes every moment special! 🌸",
-    "🎯 Almost there! Get ready for the best celebration ever! 🎯",
-    "💫 The universe is preparing something beautiful for you! 💫"
+    "� Advan ce Happy Birthday, Keerthana! 🎂",
+    "🌟 Your special day is almost here, beautiful! 🌟",
+    "💖 Sending you early birthday love and joy! 💖",
+    "🎈 The countdown to your magical day has begun! 🎈",
+    "✨ Every moment brings us closer to celebrating YOU! ✨",
+    "� Get reiady for the most amazing birthday celebration! �",
+    "� Advance hwishes for the sweetest person ever! 🌸",
+    "🎯 Your birthday is going to be absolutely perfect! 🎯",
+    "💫 Keerthana, you deserve all the happiness in the world! 💫",
+    "🎁 The best gift is having you in our lives! 🎁",
+    "🌺 Advance Happy Birthday to our shining star! 🌺",
+    "🎪 The celebration countdown is on - just for you! 🎪"
   ];
 
   useEffect(() => {
@@ -60,28 +64,34 @@ export default function CountdownSection() {
           className="text-4xl md:text-6xl font-bold text-white mb-8 animate-glow"
           data-testid="text-countdown-title"
         >
-          ⏳ Countdown to Your Birthday ⏳
+          🎉 Keerthana's Birthday Countdown 🎉
         </h2>
 
-        {/* Advance Birthday Wishes */}
-        <div className="mb-12">
+        {/* Advance Happy Birthday Wishes */}
+        <div className="mb-12 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-birthday-pink/30">
+          <h3 className="text-2xl md:text-3xl font-bold text-birthday-pink mb-6" style={{ fontFamily: 'Pacifico, cursive' }}>
+            Advance Birthday Wishes! 💝
+          </h3>
           <p 
-            className="text-xl md:text-2xl text-birthday-pink font-semibold animate-fade-in mb-4"
+            className="text-xl md:text-2xl text-white font-semibold animate-fade-in mb-6"
             style={{ fontFamily: 'Pacifico, cursive' }}
             key={wishIndex}
           >
             {advanceWishes[wishIndex]}
           </p>
-          <div className="flex justify-center space-x-2 mb-6">
+          <div className="flex justify-center space-x-2 mb-4">
             {advanceWishes.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === wishIndex ? 'bg-birthday-pink scale-125' : 'bg-white/30'
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === wishIndex ? 'bg-birthday-pink scale-125 shadow-lg shadow-birthday-pink/50' : 'bg-white/30'
                 }`}
               />
             ))}
           </div>
+          <p className="text-white/70 text-sm">
+            More wishes coming every few seconds! 🎈
+          </p>
         </div>
 
         {!isComplete ? (
