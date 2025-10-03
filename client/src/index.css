@@ -326,3 +326,53 @@
     inset: -1px;
   }
 }
+
+/* Custom animations for birthday app */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Birthday theme colors */
+:root {
+  --birthday-pink: #ec4899;
+  --celebration-purple: #8b5cf6;
+  --joy-yellow: #fbbf24;
+  --party-blue: #3b82f6;
+}

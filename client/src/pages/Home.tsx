@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import VideoBackground from "@/components/VideoBackground";
 import MusicControl from "@/components/MusicControl";
+import MusicWelcome from "@/components/MusicWelcome";
 import ConfettiEffect from "@/components/ConfettiEffect";
 import FloatingBalloons from "@/components/FloatingBalloons";
 import FloatingHearts from "@/components/FloatingHearts";
@@ -18,12 +19,21 @@ export default function Home() {
   const [isBirthdayReached, setIsBirthdayReached] = useState(false);
   const [isUnlockedWithPassword, setIsUnlockedWithPassword] = useState(false);
   const [showPasswordEntry, setShowPasswordEntry] = useState(true);
+  const [showMusicWelcome, setShowMusicWelcome] = useState(true);
+  const [musicStarted, setMusicStarted] = useState(false);
 
   useEffect(() => {
     const unlocked = localStorage.getItem("birthdayUnlocked") === "true";
+    const musicWelcomeShown = localStorage.getItem("musicWelcomeShown") === "true";
+    
     if (unlocked) {
       setIsUnlockedWithPassword(true);
       setShowPasswordEntry(false);
+    }
+    
+    if (musicWelcomeShown) {
+      setShowMusicWelcome(false);
+      setMusicStarted(true);
     }
   }, []);
 
@@ -57,17 +67,25 @@ export default function Home() {
     setShowPasswordEntry(false);
   };
 
+  const handleMusicStart = () => {
+    localStorage.setItem("musicWelcomeShown", "true");
+    setShowMusicWelcome(false);
+    setMusicStarted(true);
+  };
+
   const isContentUnlocked = isBirthdayReached || isUnlockedWithPassword;
 
   return (
     <div className="relative">
       <VideoBackground />
-      <MusicControl />
+      <MusicControl shouldStart={musicStarted} />
       <ConfettiEffect />
       <FloatingBalloons />
       <FloatingHearts />
       <PeriodicFireworks />
       <FloatingSparkles />
+      
+      {showMusicWelcome && <MusicWelcome onStart={handleMusicStart} />}
       
       <main className="relative z-10" style={{ scrollBehavior: 'smooth' }}>
         {showPasswordEntry && !isContentUnlocked ? (
