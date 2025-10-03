@@ -42,17 +42,7 @@ export default function MusicControl() {
       </audio>
 
       {showStartButton && (
-        <Button
-          onClick={handleStart}
-          size="lg"
-          variant="default"
-          className="fixed bottom-8 right-8 z-50 animate-pulse-glow backdrop-blur-sm bg-primary/90"
-          data-testid="button-start-music"
-        >
-          <Music className="mr-2 h-5 w-5" />
-          Tap to Start 🎶
-        </Button>
-      )}
+        <Button onClick={handleStart} size="lg" variant="default" className="fixed bottom-8 right-8 z-50 animate-pulse-glow backdrop-blur-sm bg-primary/90" data-testid="button-start-music" > <Music className="mr-2 h-5 w-5" /> Tap to Start 🎶 </Button> )}
 
       {!showStartButton && isPlaying && (
         <Button
