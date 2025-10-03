@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 
 export default function CountdownSection() {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const targetDate = new Date();
-    targetDate.setHours(23, 59, 59, 999);
+    targetDate.setFullYear(2025, 9, 30);
+    targetDate.setHours(0, 0, 0, 0);
 
     const timer = setInterval(() => {
       const now = new Date();
@@ -17,10 +18,11 @@ export default function CountdownSection() {
         setIsComplete(true);
         clearInterval(timer);
       } else {
-        const hours = Math.floor(difference / (1000 * 60 * 60));
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeLeft({ hours, minutes, seconds });
+        setTimeLeft({ days, hours, minutes, seconds });
       }
     }, 1000);
 
@@ -37,12 +39,13 @@ export default function CountdownSection() {
           className="text-4xl md:text-6xl font-bold text-white mb-12 animate-glow"
           data-testid="text-countdown-title"
         >
-          ⏳ Countdown to Midnight ⏳
+          ⏳ Countdown to Your Birthday ⏳
         </h2>
 
         {!isComplete ? (
-          <div className="flex justify-center gap-4 md:gap-8">
+          <div className="flex justify-center gap-4 md:gap-8 flex-wrap">
             {[
+              { value: timeLeft.days, label: "Days" },
               { value: timeLeft.hours, label: "Hours" },
               { value: timeLeft.minutes, label: "Minutes" },
               { value: timeLeft.seconds, label: "Seconds" },

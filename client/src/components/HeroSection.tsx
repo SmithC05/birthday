@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function HeroSection() {
   const [displayText, setDisplayText] = useState("");
-  const fullText = "Happy Birthday 🥳 Keerthi Madam 🎂🎈";
+  const fullText = "Happy Birthday 🥳 Keerthana 🎂🎈";
 
   useEffect(() => {
     let currentIndex = 0;

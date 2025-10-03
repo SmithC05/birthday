@@ -5,17 +5,26 @@ interface FloatingHeart {
   id: number;
   left: number;
   delay: number;
+  color: string;
 }
 
 export default function FloatingHearts() {
   const [hearts, setHearts] = useState<FloatingHeart[]>([]);
+  const colors = [
+    { text: "text-blue-500", fill: "fill-blue-500" },
+    { text: "text-red-500", fill: "fill-red-500" },
+    { text: "text-blue-400", fill: "fill-blue-400" },
+    { text: "text-red-400", fill: "fill-red-400" },
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
       const newHeart: FloatingHeart = {
-        id: Date.now(),
+        id: Date.now() + Math.random(),
         left: Math.random() * 100,
         delay: 0,
+        color: `${randomColor.text} ${randomColor.fill}`,
       };
 
       setHearts((prev) => [...prev, newHeart]);
@@ -23,7 +32,7 @@ export default function FloatingHearts() {
       setTimeout(() => {
         setHearts((prev) => prev.filter((h) => h.id !== newHeart.id));
       }, 3000);
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, []);
@@ -37,7 +46,7 @@ export default function FloatingHearts() {
           style={{ left: `${heart.left}%` }}
           data-testid={`heart-${heart.id}`}
         >
-          <Heart className="text-pink-400 fill-pink-400 w-6 h-6" />
+          <Heart className={`${heart.color} w-6 h-6`} />
         </div>
       ))}
     </div>

@@ -82,7 +82,7 @@ export default function FireworksSection() {
           style={{ fontFamily: 'Pacifico, cursive' }}
           data-testid="text-fireworks-message"
         >
-          Happy Birthday Keerthi Madam 🎉💖
+          Happy Birthday Keerthana 🎉💖
         </p>
       </div>
     </section>
