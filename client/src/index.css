@@ -375,4 +375,13 @@
   --celebration-purple: #8b5cf6;
   --joy-yellow: #fbbf24;
   --party-blue: #3b82f6;
+}@keyf
+rames shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
 }

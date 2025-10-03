@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import VideoBackground from "@/components/VideoBackground";
 import MusicControl from "@/components/MusicControl";
 import MusicWelcome from "@/components/MusicWelcome";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import ConfettiEffect from "@/components/ConfettiEffect";
 import FloatingBalloons from "@/components/FloatingBalloons";
 import FloatingHearts from "@/components/FloatingHearts";
@@ -19,28 +20,40 @@ export default function Home() {
   const [isBirthdayReached, setIsBirthdayReached] = useState(false);
   const [isUnlockedWithPassword, setIsUnlockedWithPassword] = useState(false);
   const [showPasswordEntry, setShowPasswordEntry] = useState(true);
-  const [showMusicWelcome, setShowMusicWelcome] = useState(true);
+  const [showMusicWelcome, setShowMusicWelcome] = useState(false);
   const [musicStarted, setMusicStarted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unlocked = localStorage.getItem("birthdayUnlocked") === "true";
-    const musicWelcomeShown = localStorage.getItem("musicWelcomeShown") === "true";
-    
-    if (unlocked) {
-      setIsUnlockedWithPassword(true);
-      setShowPasswordEntry(false);
-    }
-    
-    if (musicWelcomeShown) {
-      setShowMusicWelcome(false);
-      setMusicStarted(true);
-    }
+    // Simulate loading time and check session
+    const initializeApp = async () => {
+      // Minimum loading time for better UX
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Use sessionStorage instead of localStorage for security
+      const unlocked = sessionStorage.getItem("birthdayUnlocked") === "true";
+      const musicWelcomeShown = sessionStorage.getItem("musicWelcomeShown") === "true";
+      
+      if (unlocked) {
+        setIsUnlockedWithPassword(true);
+        setShowPasswordEntry(false);
+        // Only show music welcome if password was entered
+        if (musicWelcomeShown) {
+          setShowMusicWelcome(false);
+          setMusicStarted(true);
+        }
+      }
+      
+      setIsLoading(false);
+    };
+
+    initializeApp();
   }, []);
 
   useEffect(() => {
     const targetDate = new Date();
     targetDate.setFullYear(2025, 9, 30);
-    targetDate.setHours(0, 0, 0, 0);
+    targetDate.setHours(0, 0, 0, 0); // Oct 30, 2025 at 12:00 AM
     
     const checkBirthday = () => {
       const now = new Date();
@@ -48,6 +61,11 @@ export default function Home() {
       setIsBirthdayReached(reached);
       if (reached) {
         setShowPasswordEntry(false);
+        setIsUnlockedWithPassword(true);
+        // Auto-start music on birthday
+        if (!musicStarted) {
+          setShowMusicWelcome(true);
+        }
       }
     };
 
@@ -55,12 +73,14 @@ export default function Home() {
     const interval = setInterval(checkBirthday, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [musicStarted]);
 
   const handlePasswordCorrect = () => {
-    localStorage.setItem("birthdayUnlocked", "true");
+    sessionStorage.setItem("birthdayUnlocked", "true");
     setIsUnlockedWithPassword(true);
     setShowPasswordEntry(false);
+    // Show music welcome after password entry
+    setShowMusicWelcome(true);
   };
 
   const handleSkipToCountdown = () => {
@@ -68,12 +88,16 @@ export default function Home() {
   };
 
   const handleMusicStart = () => {
-    localStorage.setItem("musicWelcomeShown", "true");
+    sessionStorage.setItem("musicWelcomeShown", "true");
     setShowMusicWelcome(false);
     setMusicStarted(true);
   };
 
   const isContentUnlocked = isBirthdayReached || isUnlockedWithPassword;
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="relative">
@@ -85,7 +109,7 @@ export default function Home() {
       <PeriodicFireworks />
       <FloatingSparkles />
       
-      {showMusicWelcome && <MusicWelcome onStart={handleMusicStart} />}
+      {showMusicWelcome && isContentUnlocked && <MusicWelcome onStart={handleMusicStart} />}
       
       <main className="relative z-10" style={{ scrollBehavior: 'smooth' }}>
         {showPasswordEntry && !isContentUnlocked ? (

@@ -4,6 +4,18 @@ import { Card } from "@/components/ui/card";
 export default function CountdownSection() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isComplete, setIsComplete] = useState(false);
+  const [wishIndex, setWishIndex] = useState(0);
+
+  const advanceWishes = [
+    "🌟 Every day until your birthday is a gift! 🌟",
+    "💖 Counting down to celebrate the amazing person you are! 💖",
+    "🎈 The excitement is building up for your special day! 🎈",
+    "✨ Each second brings us closer to your magical moment! ✨",
+    "🎊 Can't wait to shower you with birthday love! 🎊",
+    "🌸 Your birthday countdown makes every moment special! 🌸",
+    "🎯 Almost there! Get ready for the best celebration ever! 🎯",
+    "💫 The universe is preparing something beautiful for you! 💫"
+  ];
 
   useEffect(() => {
     const targetDate = new Date();
@@ -29,6 +41,15 @@ export default function CountdownSection() {
     return () => clearInterval(timer);
   }, []);
 
+  // Rotate wishes every 4 seconds
+  useEffect(() => {
+    const wishTimer = setInterval(() => {
+      setWishIndex((prev) => (prev + 1) % advanceWishes.length);
+    }, 4000);
+
+    return () => clearInterval(wishTimer);
+  }, [advanceWishes.length]);
+
   return (
     <section 
       className="min-h-screen flex items-center justify-center py-16 px-4"
@@ -36,11 +57,32 @@ export default function CountdownSection() {
     >
       <div className="max-w-4xl w-full text-center">
         <h2 
-          className="text-4xl md:text-6xl font-bold text-white mb-12 animate-glow"
+          className="text-4xl md:text-6xl font-bold text-white mb-8 animate-glow"
           data-testid="text-countdown-title"
         >
           ⏳ Countdown to Your Birthday ⏳
         </h2>
+
+        {/* Advance Birthday Wishes */}
+        <div className="mb-12">
+          <p 
+            className="text-xl md:text-2xl text-birthday-pink font-semibold animate-fade-in mb-4"
+            style={{ fontFamily: 'Pacifico, cursive' }}
+            key={wishIndex}
+          >
+            {advanceWishes[wishIndex]}
+          </p>
+          <div className="flex justify-center space-x-2 mb-6">
+            {advanceWishes.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === wishIndex ? 'bg-birthday-pink scale-125' : 'bg-white/30'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
 
         {!isComplete ? (
           <div className="flex justify-center gap-4 md:gap-8 flex-wrap">

@@ -17,7 +17,17 @@ export default function PasswordEntry({ onCorrectPassword, onSkipToCountdown }: 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (password === "20061030") {
+    // Check if it's already Oct 30, 2025 - disable password entry
+    const now = new Date();
+    const targetDate = new Date(2025, 9, 30, 0, 0, 0, 0); // Oct 30, 2025 at 12:00 AM
+    
+    if (now >= targetDate) {
+      // Password is disabled on/after the birthday
+      onCorrectPassword();
+      return;
+    }
+    
+    if (password === "20251030") { // Updated to 2025 date
       onCorrectPassword();
     } else {
       setError(true);
