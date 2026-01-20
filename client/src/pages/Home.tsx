@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import VideoBackground from "@/components/VideoBackground";
 import MusicControl from "@/components/MusicControl";
@@ -14,7 +15,9 @@ import GallerySection from "@/components/GallerySection";
 import MessagesSection from "@/components/MessagesSection";
 import CountdownSection from "@/components/CountdownSection";
 import SurpriseSection from "@/components/SurpriseSection";
+import CakeCuttingSection from "@/components/CakeCuttingSection";
 import FireworksSection from "@/components/FireworksSection";
+import TimelineSection from "@/components/TimelineSection";
 
 export default function Home() {
   const [isBirthdayReached, setIsBirthdayReached] = useState(false);
@@ -29,11 +32,11 @@ export default function Home() {
     const initializeApp = async () => {
       // Minimum loading time for better UX
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Use sessionStorage instead of localStorage for security
       const unlocked = sessionStorage.getItem("birthdayUnlocked") === "true";
       const musicWelcomeShown = sessionStorage.getItem("musicWelcomeShown") === "true";
-      
+
       if (unlocked) {
         setIsUnlockedWithPassword(true);
         setShowPasswordEntry(false);
@@ -43,7 +46,7 @@ export default function Home() {
           setMusicStarted(true);
         }
       }
-      
+
       setIsLoading(false);
     };
 
@@ -54,7 +57,7 @@ export default function Home() {
     const targetDate = new Date();
     targetDate.setFullYear(2025, 9, 30);
     targetDate.setHours(0, 0, 0, 0); // Oct 30, 2025 at 12:00 AM
-    
+
     const checkBirthday = () => {
       const now = new Date();
       const reached = now >= targetDate;
@@ -108,12 +111,12 @@ export default function Home() {
       <FloatingHearts />
       <PeriodicFireworks />
       <FloatingSparkles />
-      
+
       {showMusicWelcome && isContentUnlocked && <MusicWelcome onStart={handleMusicStart} />}
-      
+
       <main className="relative z-10" style={{ scrollBehavior: 'smooth' }}>
         {showPasswordEntry && !isContentUnlocked ? (
-          <PasswordEntry 
+          <PasswordEntry
             onCorrectPassword={handlePasswordCorrect}
             onSkipToCountdown={handleSkipToCountdown}
           />
@@ -126,10 +129,12 @@ export default function Home() {
               <>
                 <div className="animate-fade-in">
                   <HeroSection />
+                  <TimelineSection />
                 </div>
                 <div className="animate-fade-in">
                   <GallerySection />
                   <MessagesSection />
+                  <CakeCuttingSection />
                   <SurpriseSection />
                   <FireworksSection />
                 </div>

@@ -69,3 +69,4 @@ temp/
 .local/
 .replit
 replit.nix
+.vercel
